@@ -1,6 +1,7 @@
 '''
 tablero.py: Dibuja el tablero del juego de El gato
 '''
+import random
 
 def dibuja_tablero(simbolos: dict):
     '''
@@ -15,11 +16,51 @@ def dibuja_tablero(simbolos: dict):
     {simbolos['7']} | {simbolos['8']} | {simbolos['9']}
     ''')
 
+def ia(simbolos: dict):
+    '''
+    Juega la máquina
+    '''
+    ocupado = True
+    while ocupado is True:
+        x = random.choice(list(simbolos.keys()))
+        if simbolos[x] not in ['X', 'O']:
+            simbolos[x] = 'O'
+            ocupado = False
+
+def usuario(simbolos: dict):
+    '''
+    Juega el usuario
+    '''
+    lista_numeros = [str(i) for i in range(1,10)]
+    ocupado = True
+    while ocupado is True:
+        x = input("Ingresa el número (del 1 al 9) de la casilla: ")
+        if x in numeros:
+            if simbolos[x] not in ['X', 'O']:
+                simbolos[x] = 'X'
+                ocupado = False
+            else: 
+                print('Casilla ocupada')
+        else:
+            print('Número no válido')
+
 if __name__ == '__main__':
     numeros = [str(x) for x in range(1, 10)]
-    simbolos = {x:x for x in numeros}
-    dibuja_tablero(simbolos)
-    simbolos['1'] = 'X'
-    dibuja_tablero(simbolos)
-    simbolos['5'] = 'O'
-    dibuja_tablero(simbolos)
+    dsimbolos = {x:x for x in numeros}
+    dibuja_tablero(dsimbolos)
+    ia(dsimbolos)
+    dibuja_tablero(dsimbolos)
+    usuario(dsimbolos)
+    dibuja_tablero(dsimbolos)
+
+    '''
+    x = random.choice(numeros)
+    numeros.remove(x)
+    dsimbolos[x] = 'X'
+    dibuja_tablero(dsimbolos)
+    o = random.choice(numeros)
+    numeros.remove(o)
+    dsimbolos[o] = "O"
+    dibuja_tablero(dsimbolos)
+    print(numeros)
+    '''
