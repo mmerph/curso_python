@@ -16,27 +16,30 @@ def dibuja_tablero(simbolos: dict):
     {simbolos['7']} | {simbolos['8']} | {simbolos['9']}
     ''')
 
-def ia(simbolos: dict):
+def ia(simbolos: dict, cNombre: str):
     '''
     Juega la máquina
     '''
     ocupado = True
     while ocupado is True:
+        print(f'Turno de {cNombre} como O')
         x = random.choice(list(simbolos.keys()))
         if simbolos[x] not in ['X', 'O']:
+            print(f'{cNombre} seleccionó la casilla {x}:')
             simbolos[x] = 'O'
             ocupado = False
 
-def usuario(simbolos: dict):
+def usuario(simbolos: dict, jNombre: str):
     '''
     Juega el usuario
     '''
     lista_numeros = [str(i) for i in range(1,10)]
     ocupado = True
     while ocupado is True:
-        x = input("Ingresa el número (del 1 al 9) de la casilla: ")
+        x = input(f'Turno de {jNombre} como X. Ingresa el número (del 1 al 9) de la casilla: ')
         if x in lista_numeros:
             if simbolos[x] not in ['X', 'O']:
+                print(f'{jNombre} seleccionó la casilla {x}:')
                 simbolos[x] = 'X'
                 ocupado = False
             else: 
@@ -44,7 +47,7 @@ def usuario(simbolos: dict):
         else:
             print('Número no válido')
 
-def juego(simbolos: dict):
+def juego(simbolos: dict, jNombre: str, cNombre: str):
     '''
     juego del gato
     '''
@@ -58,32 +61,36 @@ def juego(simbolos: dict):
         ['1','5','9'],
         ['3','5','7']
         ]
+    
     en_juego = True
     dibuja_tablero(simbolos)
     movimientos = 0
     gana = None
     while en_juego:
-        usuario(simbolos)
+        usuario(simbolos, jNombre)
         dibuja_tablero(simbolos)
         movimientos += 1
         gana = checa_gana(simbolos, lista_combinaciones)
         if gana is not None:
+            ganador = jNombre
             en_juego = False
             continue
         if movimientos >= 9:
             en_juego = False
             continue
-        ia(simbolos)
+        ia(simbolos, cNombre)
         dibuja_tablero(simbolos)
         movimientos += 1
         gana = checa_gana(simbolos, lista_combinaciones)
+        ganador = ''
         if gana is not None:
+            ganador = cNombre
             en_juego = False
             continue
         if movimientos >= 9:
             en_juego = False
             continue
-    return gana
+    return ganador
         
 
 
@@ -96,16 +103,16 @@ def checa_gana(simbolos: dict, combinaciones: list):
             return simbolos[c[0]]
     return None
 
-def actualiza_score(score: dict, ganador: str):
+def actualiza_score(score: dict, ganador: str, jNombre: str, cNombre: str):
     '''Actualiza el score'''
     X= score ["X"]
     O = score ["O"]
     if ganador is not None:
         print(f'El ganador es {ganador}')
-        if ganador == 'X':
+        if ganador == jNombre:
             X["G"] += 1
             O["P"] += 1
-        elif ganador == 'O':
+        elif ganador == cNombre:
             O["G"] += 1
             X["P"] += 1
         else: 

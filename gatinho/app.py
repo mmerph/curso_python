@@ -1,6 +1,7 @@
+import argparse
 import tablero
 
-def main():
+def main(jugador: str, compu: str):
     '''
     Función principal
     '''
@@ -11,11 +12,12 @@ def main():
     corriendo = True
     while corriendo:
         dsimbolos = {x:x for x in numeros}
-        g = tablero.juego(dsimbolos)
-        tablero.actualiza_score(score, g)
+        print(f'Juega {jugador} VS. {compu}')
+        g = tablero.juego(dsimbolos, jugador, compu)
+        tablero.actualiza_score(score, g, jugador, compu)
         tablero.despliega_tablero(score)
         seguir = input('¿Quieres seguir jugando? (s/n)')
-        if seguir.lower() == 'n':
+        if seguir.lower() != 's':
             corriendo = False
     '''
     g = juego(dsimbolos)
@@ -26,4 +28,10 @@ def main():
     '''
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-j', type = str,
+    help = 'Nombre del jugador', default = 'Usuario')
+    parser.add_argument('-c', type = str,
+    help = 'Nombre de la computadora' , default = 'IA')
+    args = parser.parse_args()
+    main(args.j, args.c)
