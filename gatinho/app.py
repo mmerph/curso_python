@@ -1,7 +1,11 @@
+'''
+app.py: Archivo principal del programa que llama la lógica del proyecto y despliega el tablero.
+'''
+
 import argparse
 import tablero
 
-def main(jugador: str, compu: str):
+def main(jugador: str, simbJugador: str, compu: str):
     '''
     Función principal
     '''
@@ -13,9 +17,9 @@ def main(jugador: str, compu: str):
     while corriendo:
         dsimbolos = {x:x for x in numeros}
         print(f'Juega {jugador} VS. {compu}')
-        g = tablero.juego(dsimbolos, jugador, compu)
-        tablero.actualiza_score(score, g, jugador, compu)
-        tablero.despliega_tablero(score)
+        g = tablero.juego(dsimbolos, jugador, compu, simbJugador)
+        tablero.actualiza_score(score, g, jugador, compu, simbJugador)
+        tablero.despliega_tablero(score, simbJugador)
         seguir = input('¿Quieres seguir jugando? (s/n)')
         if seguir.lower() != 's':
             corriendo = False
@@ -30,8 +34,10 @@ def main(jugador: str, compu: str):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-j', type = str,
-    help = 'Nombre del jugador', default = 'Usuario')
+    help = 'Nombre del usuario', default = 'Usuario')
+    parser.add_argument('-s', type = str,
+    help = 'Símbolo del usuario (X o O)' , default = 'X')    
     parser.add_argument('-c', type = str,
     help = 'Nombre de la computadora' , default = 'IA')
     args = parser.parse_args()
-    main(args.j, args.c)
+    main(args.j, args.s, args.c)
