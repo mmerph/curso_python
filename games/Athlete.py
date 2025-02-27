@@ -1,22 +1,23 @@
 class Athlete:
-    """Athlete class, with only name attribute."""
+    """ Athlete class, with only name attribute. """
     def __init__(self, name:str):
         self.name = name
 
     def __str__(self):
-        return f'Athlete: {self.name}'
-    
+        return f"Athlete: {self.name}"
+
     def __repr__(self):
-        return f"Athlete(' {self.name} ')"
-
+        return f"Athlete('{self.name}')"
+    
+    def to_json(self)->dict:
+        """ Método para representar la clase como diccionario """
+        return {"name":self.name}
+    
     def display(self):
-        print(f'{self.name}')
-
-    def to_json(self)-> dict:
-        return{"name": self.name}
+        print(f"{self.name}")
 
 if __name__ == "__main__":
-    a = Athlete('Ana G.')
+    a = Athlete("Ana G.")
     a.display()
     print(a)
     print(repr(a))

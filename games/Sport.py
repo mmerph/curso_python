@@ -16,11 +16,11 @@ class Sport:
     
     def __repr__(self)-> str:
         """Representación en string de sport"""
-        return f"Sport (name = '{self.name}', players = {self.players}, league='{self.league}')"
+        return f"Sport(name = '{self.name}', players = {self.players}, league='{self.league}')"
     
     def to_json(self)->dict:
         """Convertir Sport ro json"""
-        return{"name":self.name, "players": self.players, "league": self.league}
+        return{"name":self.name, "players":self.players, "league":self.league}
     
 if __name__== "__main__":
     s = Sport("Soccer", 11, "FIFA")
