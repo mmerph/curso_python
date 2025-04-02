@@ -174,6 +174,23 @@ class SistemaCine:
             user = User(username, nombre_completo, email, password)
             self.usuarios[user.username] = user
 
+    def obtener_personajes_por_estrella(self, id_estrella):
+        personajes = []
+        for rel in self.relaciones.values():
+            if rel.id_estrella == id_estrella:
+                pelicula = self.peliculas.get(rel.id_pelicula)
+                if pelicula:
+                    personajes.append({"personaje": rel.personaje, "pelicula": pelicula})
+        return personajes
+    
+    def obtener_actores_por_pelicula(self, id_pelicula):
+        personajes = []
+        for rel in self.relaciones.values():
+            if rel.id_pelicula == id_pelicula:
+                actor = self.actores.get(rel.id_estrella)
+                if actor:
+                    personajes.append({"actor": actor, "personaje": rel.personaje})
+        return personajes
 
 if __name__ == "__main__":
     archivo_actores = "datos/actores.csv"
@@ -210,12 +227,10 @@ if __name__ == "__main__":
     print(exito) 
     if exito:
         print(sistema.usuario_actual.username)
-        sistema.agregar_pelicula('La vida es bella', '1997-12-20', 'https://play-lh.googleusercontent.com/26mDz-EMplgOKOcTENb31F8i38qfXrJz0hGabK88ocyXSIMMIlt7OwxCHEARepbN-R36c3pX8j4SEk_bAw=w240-h480-rw')
-        sistema.agregar_relacion(69,36,'Rita')
-        sistema.agregar_usuario('messi', 'Lionel Messi', 'messi@gmail.com', '12345')
+        """sistema.agregar_pelicula('Stranger Things', '2016-07-15', 'https://m.media-amazon.com/images/I/81SG03G+g7L.jpg')
+        sistema.agregar_relacion(106,64,'Eleven')
         sistema.guardar_csv(archivo_peliculas, sistema.peliculas)
-        sistema.guardar_csv(archivo_relaciones, sistema.relaciones)
-        sistema.guardar_csv(archivo_usuarios, sistema.usuarios)
+        sistema.guardar_csv(archivo_relaciones, sistema.relaciones)"""
     else: 
         print('Usuario o contraseña incorrectos')
     '''sistema.agregar_actor('Millie Brown', '2004-02-19', 'Marbella', 'https://es.web.img3.acsta.net/pictures/17/10/27/11/44/0016642.jpg')
