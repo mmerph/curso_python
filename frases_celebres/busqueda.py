@@ -12,7 +12,6 @@ def leer_csv(archivo):
         lector = csv.reader(f)
         for fila in lector:
             frases.append(fila[0])
-        print (frases)
     return frases
 
 # función para buscar palabras en las frases 
@@ -51,9 +50,10 @@ if __name__ == '__main__':
     parser.add_argument('palabras', nargs='+', help='Palabras a buscar (una o más)')
     #parsear los argumentos
     args = parser.parse_args()
-    archivo_frases = os.path.join(os.path.dirname(__file__),'frases.csv')
+    archivo_frases = os.path.join(os.path.dirname(__file__),'frases_consolidadas.csv')
 
-    
+    #llamar a la función principal 
+    main(archivo_frases, args.palabras)
 
 
 
